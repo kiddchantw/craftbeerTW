@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateUsersTable extends Migration
+class CreateBrewerysAndStoresTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,20 +13,22 @@ class CreateUsersTable extends Migration
      */
     public function up()
     {
-        Schema::create('users', function (Blueprint $table) {
+        Schema::create('brewerys_and_stores', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name')->nullable();
             $table->string('email')->unique();
             $table->string('password');
-            $table->rememberToken()->nullable();
+            $table->rememberToken();
+            // $table->int('clap')->default(0);
             $table->timestamps();
-            $table->integer('clap')->default(0);
             $table->timestamp('token_expire_time',0)->nullable();
-
+            $table->double('rate', 8, 1)->nullable();
+            $table->string('address')->nullable();
+            $table->string('note')->nullable();
+            $table->string('gps_url')->nullable();
+            
         });
     }
-
-    //$table->timestamp('email_verified_at')->nullable();
 
     /**
      * Reverse the migrations.
@@ -35,6 +37,6 @@ class CreateUsersTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('users');
+        Schema::dropIfExists('brewerys_and_stores');
     }
 }
