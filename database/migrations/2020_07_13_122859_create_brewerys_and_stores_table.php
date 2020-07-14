@@ -26,7 +26,6 @@ class CreateBrewerysAndStoresTable extends Migration
             $table->string('address')->nullable();
             $table->string('note')->nullable();
             $table->string('gps_url')->nullable();
-            
         });
     }
 
