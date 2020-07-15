@@ -20,10 +20,15 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::post('login', 'Auth\LoginController@login');
-Route::post('registerUsers', 'Auth\RegisterController@registerUsers');
 
+Route::middleware(['apiLog'])->group(function () {
 
-Route::middleware(['auth:api'])->group(function () {
-    Route::post('show', 'Auth\LoginController@show');
+    Route::post('login', 'Auth\LoginController@login');
+    Route::post('registerUsers', 'Auth\RegisterController@registerUsers');
+    
+    Route::middleware(['auth:api'])->group(function () {
+        Route::post('show', 'Auth\LoginController@show');
+        Route::post('refreshToken', 'Auth\LoginController@refreshToken');
+    });
 });
+
