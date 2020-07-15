@@ -6,6 +6,11 @@ use App\Http\Controllers\Controller;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 
+use Illuminate\Http\Request;
+use App\User;
+use Illuminate\Support\Str;
+
+
 class LoginController extends Controller
 {
     /*
@@ -35,6 +40,23 @@ class LoginController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('guest')->except('logout');
+        // $this->middleware('guest')->except('logout');
+    }
+
+    public function login(Request $request)
+    {
+        do  {
+            $loginToken = Str::random(60);
+            $checkTokenExist = User::where('remember_token', '=', $loginToken)->first();  
+        } 
+        while( $checkTokenExist );
+        
+        $user = User::where('email', '=', $request->email)->first();
+        $user->remember_token =  $loginToken;
+        $user->token_expire_time = date('Y/m/d H:i:s', time()+1*60);
+        $user->save();
+        $response = array("token"=>$user->remember_token , "expire_time"=> $user->token_expire_time) ;
+                
+        return response()->json(['message' => $response], 200);
     }
 }

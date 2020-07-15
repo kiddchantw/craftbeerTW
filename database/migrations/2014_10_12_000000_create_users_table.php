@@ -22,7 +22,6 @@ class CreateUsersTable extends Migration
             $table->timestamps();
             $table->integer('clap')->default(0);
             $table->timestamp('token_expire_time',0)->nullable();
-
         });
     }
 

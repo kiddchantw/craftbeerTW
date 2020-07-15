@@ -9,6 +9,10 @@ use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 
+use Illuminate\Http\Request;
+use Illuminate\Validation\ValidationException;
+
+
 class RegisterController extends Controller
 {
     /*
@@ -69,5 +73,36 @@ class RegisterController extends Controller
             'email' => $data['email'],
             'password' => Hash::make($data['password']),
         ]);
+    }
+
+
+    public function registerUsers(Request $request)
+    {
+        try {
+            $rules = [
+                "name" => "required|string|unique:users",
+                "password" => "required|string",
+                "email" => "required|email|unique:users",
+            ];
+            $message = [
+                "name.required" => "請輸入name",
+                "password.required" => "請輸入password",
+                "email.required" => "請輸入email",
+            ];
+            $validResult = $request->validate($rules, $message);
+        } catch (ValidationException $exception) {
+            $errorMessage = $exception->validator->errors()->first();
+            return response()->json([
+                'message' => $errorMessage
+            ], 400);
+        }
+
+        $newRegister = new User;
+        $newRegister->name = $request->name;
+        $newRegister->password = $request->password;
+        $newRegister->email = $request->email;
+        $newRegister->save();
+
+        return response()->json(['message' => 'add success'], 201);
     }
 }

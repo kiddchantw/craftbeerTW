@@ -4,6 +4,10 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
+use Illuminate\Support\Facades\Hash;
+
+
+
 class BrewerysStores extends Model
 {
     //
@@ -28,4 +32,13 @@ class BrewerysStores extends Model
         'password',
     ];
 
+
+    //Eloquent: Mutators
+    public function setPasswordAttribute($password)
+    {
+        if ( $password !== null & $password !== "" )
+        {
+            $this->attributes['password'] = Hash::make($password);
+        }
+    }
 }
