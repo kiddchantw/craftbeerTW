@@ -103,6 +103,6 @@ class RegisterController extends Controller
         $newRegister->email = $request->email;
         $newRegister->save();
 
-        return response()->json(['message' => 'add success'], 201);
+        return response()->json(['message' => 'newUsers add success'], 201);
     }
 }

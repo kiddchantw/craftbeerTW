@@ -67,7 +67,6 @@ class LoginController extends Controller
     }
 
 
-
     public function refreshToken(Request $request){
         $user = $request->user();
         $user->token_expire_time = date('Y/m/d H:i:s', time()+5*60);

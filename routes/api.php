@@ -26,9 +26,14 @@ Route::middleware(['apiLog'])->group(function () {
     Route::post('login', 'Auth\LoginController@login');
     Route::post('registerUsers', 'Auth\RegisterController@registerUsers');
     
+
     Route::middleware(['auth:api'])->group(function () {
         Route::post('show', 'Auth\LoginController@show');
         Route::post('refreshToken', 'Auth\LoginController@refreshToken');
     });
+
+    Route::resource('brewerys', 'brewerysController');
+    Route::resource('items', 'itemsController');
+
 });
 

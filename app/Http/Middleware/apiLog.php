@@ -3,7 +3,8 @@
 namespace App\Http\Middleware;
 
 use Closure;
-use Log;
+//use Log;
+use Illuminate\Support\Facades\Log;
 
 
 class apiLog
