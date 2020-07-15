@@ -55,8 +55,16 @@ class LoginController extends Controller
         $user->remember_token =  $loginToken;
         $user->token_expire_time = date('Y/m/d H:i:s', time()+1*60);
         $user->save();
-        $response = array("token"=>$user->remember_token , "expire_time"=> $user->token_expire_time) ;
-                
+        
+        $response = array("token"=>$user->remember_token , "expire_time"=> $user->token_expire_time) ;        
         return response()->json(['message' => $response], 200);
+
+        // return $request->user();
     }
+
+    public function show(Request $request)
+    {
+        return $request->user();
+    }
+
 }

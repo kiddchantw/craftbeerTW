@@ -3,6 +3,8 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
+// use Symfony\Bridge\PsrHttpMessage\Factory\HttpFoundationFactory;
+
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -20,3 +22,8 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 
 Route::post('login', 'Auth\LoginController@login');
 Route::post('registerUsers', 'Auth\RegisterController@registerUsers');
+
+
+Route::middleware(['auth:api'])->group(function () {
+    Route::post('show', 'Auth\LoginController@show');
+});

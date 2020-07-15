@@ -28,10 +28,8 @@ class AuthServiceProvider extends ServiceProvider
     public function boot()
     {
         $this->registerPolicies();
-
-        //
+        
         Auth::viaRequest('token', function ($request) {
-            //寫法2 因為orm 找不到就會null
             $user = User::where('remember_token', "=", $request->remember_token)->first();
             if ($user){
                 $nowTimeStr = strtotime(date('Y/m/d H:i:s', time()));
@@ -42,7 +40,6 @@ class AuthServiceProvider extends ServiceProvider
                     return null;
                 }
             }
-           
         });
     }
 }
