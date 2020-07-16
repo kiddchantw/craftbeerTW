@@ -12,9 +12,9 @@
 # todolist: 1st stage
 
 ### model 
-- [x] users
-- [x] brewerys
-- [x] items
+- [x] users 用戶資料 
+- [x] brewerys 釀酒廠/店家資訊
+- [x] items 不同酒廠酒類品項/清單
 
 
 
@@ -30,15 +30,11 @@
 | update/edit  |   |  o  |  edit item name   | 
 | delete  |   |  50%  |   o   | 
 | logout  |   |    |    n/a  | 
-| token /expire  |  o |    |      | 
+| token /expire  |  o |   o  |  n/a     | 
 
 
 
 
-- [ ] 用戶資料 
-- [ ] 釀酒廠/店家資訊
-- [ ] 不同酒廠酒類品項
-- [ ] 個人飲用紀錄
 
 
 ## database 規劃
@@ -47,6 +43,11 @@ https://dbdiagram.io/d/5f096d6d0425da461f048851
 
 
 # todoslist 2nd stage
+## model
+- [ ] history 個人飲用紀錄
+- [ ] orders
+
+##  api
 - [ ] 購物車 (僅發送訂購、不串金流)
 - [ ] 整合三方登入
 - [ ] 上傳圖片

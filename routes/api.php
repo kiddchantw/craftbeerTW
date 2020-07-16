@@ -37,7 +37,11 @@ Route::middleware(['apiLog'])->group(function () {
     Route::post('loginBrewerys', 'Auth\LoginController@loginBrewerys');
 
     Route::resource('brewerys', 'brewerysController');
-    Route::get('brewerys/{id}/items', 'brewerysController@showAllItems');
+    
+    Route::middleware(['breweryToken'])->group(function () {
+        Route::post('brewerys/{id}/items', 'brewerysController@showAllItems');
+    });
+
 
     Route::resource('items', 'itemsController');
 
