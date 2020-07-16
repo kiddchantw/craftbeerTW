@@ -28,7 +28,7 @@
 | read/showOne  |  o  |  o    |   left join/ show brewerys' name  | 
 | showAll  |  n/a  |   o  |  n/a  | 
 | update/edit  |   |  o  |  edit item name   | 
-| delete  |   |  o  |   o   | 
+| delete  |   |  50%  |   o   | 
 | logout  |   |    |    n/a  | 
 | token /expire  |  o |    |      | 
 
