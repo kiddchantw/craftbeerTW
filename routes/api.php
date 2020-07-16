@@ -24,8 +24,11 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 Route::middleware(['apiLog'])->group(function () {
 
     Route::post('login', 'Auth\LoginController@login');
+
     Route::post('registerUsers', 'Auth\RegisterController@registerUsers');
     
+    Route::post('loginBrewerys', 'Auth\LoginController@loginloginBrewerys');
+
 
     Route::middleware(['auth:api'])->group(function () {
         Route::post('show', 'Auth\LoginController@show');
@@ -33,6 +36,8 @@ Route::middleware(['apiLog'])->group(function () {
     });
 
     Route::resource('brewerys', 'brewerysController');
+    Route::get('brewerys/{id}/items', 'brewerysController@showAllItems');
+
     Route::resource('items', 'itemsController');
 
 });

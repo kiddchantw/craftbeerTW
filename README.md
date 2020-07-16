@@ -21,15 +21,16 @@
 
 ### CRUD 
 
-| api  | users  |brewerys   |   items|   |
-|---------|:---:|:---:|:---:|:---:|
+| api  | users  |brewerys   |   items|
+|---------|:---:|:---:|:---:|
 | register/create |  o  | o |  o  | 
 | login      |  o  |  o | n/a  |
-| read/show  |  o  |    |      | 
-| update/edit  |   |    |   o   | 
-| delete  |   |    |   o   | 
+| read/showOne  |  o  |  o    |   left join/ show brewerys' name  | 
+| showAll  |  n/a  |   o  |  n/a  | 
+| update/edit  |   |  o  |  edit item name   | 
+| delete  |   |  o  |   o   | 
 | logout  |   |    |    n/a  | 
-| token /expire  |   |    |      | 
+| token /expire  |  o |    |      | 
 
 
 

@@ -8,6 +8,7 @@ use Illuminate\Validation\ValidationException;
 use App\Items;
 use App\Http\Requests\ItemsRequest;
 use Validator;
+use DB;
 
 class itemsController extends Controller
 {
@@ -74,10 +75,15 @@ class itemsController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function show($id)
-    {
-        //
-        return Items::find($id);
-
+    {  
+        // m0 ok :no join
+        // return Items::find($id);
+        // $showItems = Items:select()
+                
+        //m1 ok: left join
+        //show item from 哪個brewerys的名稱
+        $showItems = Items::where('items.id','=', $id)->leftJoin('brewerys_and_stores', 'items.brewerys_and_stores_id', '=', 'brewerys_and_stores.id')->select('items.*','brewerys_and_stores.name AS brewerys_and_stores_name')->get();
+        return $showItems ;
     }
 
     /**
@@ -110,6 +116,11 @@ class itemsController extends Controller
      */
     public function destroy($id)
     {
-        //
+        if(Items::find($id)){
+            Items::destroy($id);
+            return response()->json(['message' => 'Item:'. $id .' destroy success'], 201);
+        } else{
+            return response()->json(['message' => "destroy fail"], 400);
+        }
     }
 }

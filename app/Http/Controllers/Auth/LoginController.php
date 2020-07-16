@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Auth;
 
+use App\BrewerysStores;
 use App\Http\Controllers\Controller;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
@@ -60,6 +61,23 @@ class LoginController extends Controller
         return response()->json(['message' => $response], 200);
     }
 
+
+    public function loginBrewerys(Request $request)
+    {
+        do  {
+            $loginToken = Str::random(60);
+            $checkTokenExist = BrewerysStores::where('remember_token', '=', $loginToken)->first();  
+        } 
+        while( $checkTokenExist );
+        
+        $stores = BrewerysStores::where('email', '=', $request->email)->first();
+        $stores->remember_token =  $loginToken;
+        $stores->token_expire_time = date('Y/m/d H:i:s', time()+1*60);
+        $stores->save();
+        
+        $response = array("token"=>$stores->remember_token , "expire_time"=> $stores->token_expire_time) ;        
+        return response()->json(['message' => $response], 200);
+    }
 
     public function show(Request $request)
     {

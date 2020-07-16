@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 
 use Illuminate\Validation\ValidationException;
 use App\BrewerysStores;
+use App\Items;
+use Symfony\Component\Finder\Finder;
 
 class brewerysController extends Controller
 {
@@ -29,6 +31,26 @@ class brewerysController extends Controller
         //
     }
 
+
+    public $messageValidate = [
+        "name.required" => "請輸入name",
+        "name.unique" => "name exist",
+        "password.required" => "請輸入password",
+        "password.regex" => "請確認password符合 A-Za-z0-9 ",
+        "email.required" => "請輸入email",
+        "email.unique" => "email exist"
+    ];
+
+    public function customValidate(Request $request, array $rulesInput)
+    {
+        try {
+            $this->validate($request, $rulesInput, $this->messageValidate);
+        } catch (ValidationException $exception) {
+            $errorMessage = $exception->validator->errors()->first();
+            return  $errorMessage;
+        }
+    }
+
     /**
      * Store a newly created resource in storage.
      *
@@ -37,33 +59,22 @@ class brewerysController extends Controller
      */
     public function store(Request $request)
     {
-        //
-        try {
-            $rules = [
-                "email" => "required| email |unique:brewerys_and_stores",
-                "password" => "required|string | min:1   | regex:/^[A-Za-z0-9]+$/",
-                "name" => "required |string | min:1 |unique:brewerys_and_stores",
-            ];
-            $message = [
-                "name.required" => "請輸入name",
-                "password.required" => "請輸入password",
-                "password.regex" => "請輸入password 2",
-                "email.required" => "請輸入email",
-            ];
-            $validResult = $request->validate($rules, $message);
-        } catch (ValidationException $exception) {
-            $errorMessage = $exception->validator->errors()->first();
-            return response()->json([
-                'message' => $errorMessage
-            ], 400);
+        $rules = [
+            "email" => "required| email |unique:brewerys_and_stores",
+            "password" => "required|string | min:1   | regex:/^[A-Za-z0-9]+$/",
+            "name" => "required |string | min:1 |unique:brewerys_and_stores",
+        ];
+        $validResult = $this->customValidate($request, $rules);
+        if ($validResult != Null) {
+            return response()->json(['message' => $validResult], 400);
         }
+
         $newBrewery = new BrewerysStores();
         $newBrewery->name = $request->name;
         $newBrewery->password = $request->password;
         $newBrewery->email = $request->email;
         $newBrewery->save();
         return response()->json(['message' => 'newBrewery add success'], 201);
-        
     }
 
     /**
@@ -74,7 +85,15 @@ class brewerysController extends Controller
      */
     public function show($id)
     {
+        return BrewerysStores::Find($id);
+    }
+
+
+    public function showAllItems($id)
+    {
         //
+        $showItems = Items::where('brewerys_and_stores.id', '=', $id)->leftJoin('brewerys_and_stores', 'items.brewerys_and_stores_id', '=', 'brewerys_and_stores.id')->select('brewerys_and_stores.name AS brewerys_and_stores_name', 'items.name', 'items.alc', 'items.price', 'items.note', 'items.release',)->get();
+        return $showItems;
     }
 
     /**
@@ -86,6 +105,7 @@ class brewerysController extends Controller
     public function edit($id)
     {
         //
+
     }
 
     /**
@@ -98,6 +118,17 @@ class brewerysController extends Controller
     public function update(Request $request, $id)
     {
         //
+        $rules = [
+            "name" => "required| min:1 | string",
+        ];
+        $validResult = $this->customValidate($request, $rules);
+        if ($validResult != Null){
+            return response()->json(['message' => $validResult], 400);
+        }
+        $updateBrewerysStores = BrewerysStores::find($id);
+        $updateBrewerysStores->name = $request->name;
+        $updateBrewerysStores->save();
+        return response()->json(['message' => 'BrewerysStores:'. $id .' update success'], 201);
     }
 
     /**
@@ -109,5 +140,11 @@ class brewerysController extends Controller
     public function destroy($id)
     {
         //
+        if(BrewerysStores::find($id)){
+            BrewerysStores::destroy($id);
+            return response()->json(['message' => 'BrewerysStores:'. $id .' destroy success'], 201);
+        } else{
+            return response()->json(['message' => "destroy fail"], 400);
+        }
     }
 }

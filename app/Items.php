@@ -6,7 +6,7 @@ use Dotenv\Result\Result;
 use Illuminate\Database\Eloquent\Model;
 
 use Illuminate\Http\Request;
-use Illuminate\Validation\ValidationException;
+use Illuminatea   \Validation\ValidationException;
 
 class Items extends Model
 {
@@ -27,8 +27,5 @@ class Items extends Model
         'created_at','updated_at'
     ];  
 
-    // public function name()
-    // {
-    //     return $this->hasOne('App\BrewerysStores');
-    // }
+
 }
