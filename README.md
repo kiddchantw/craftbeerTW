@@ -11,10 +11,17 @@
 
 # todolist: 1st stage
 
-### 登入/註冊
-- [ ] 用戶
-- [ ] 釀酒廠/店家
-- [ ] token
+### model 
+- [x] users
+- [x] brewerys
+- [x] items
+
+|   | register  |login   |   |   |
+|---------|:---:|:---:|:---:|:---:|
+| users   |  o  | o |   |   |
+| brewerys|  o  |   |   |   |
+| items   |  o  | n/a  |   |   |
+
 
 ### CRUD 
 - [ ] 用戶資料 
