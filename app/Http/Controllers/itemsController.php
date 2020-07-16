@@ -7,7 +7,7 @@ use Illuminate\Validation\ValidationException;
 
 use App\Items;
 use App\Http\Requests\ItemsRequest;
-
+use Validator;
 
 class itemsController extends Controller
 {
@@ -27,64 +27,42 @@ class itemsController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    // public function store(Request $request)
-    public function store(ItemsRequest $request)
+
+    public $messageValidate = [
+        "name.required" => "請輸入name",
+        "brewerys_and_stores_id.required" => "請輸入name brewerys_and_stores_id",
+        "alc.required" => "請輸入alc",
+        "price.required" => "請輸入price",
+        "release.required" => "請輸入release",
+    ];
+
+    public function customValidate(Request $request, array $rulesInput)
     {
-        // try {
-        //     $rules = [
-        //         "name" => "required| min:1 | string",
-        //         "brewerys_and_stores_id" => "required|int|exists:brewerys_and_stores,id",
-        //         "alc" => "required|numeric",
-        //         "price"=> "required|int",
-        //         "release"=> "required|boolean",
-        //     ];
-        //     $message = [
-        //         "name.required" => "請輸入name",
-        //         "brewerys_and_stores_id.required" => "請輸入name brewerys_and_stores_id",
-        //         "alc.required" => "請輸入alc",
-        //         "price.required" => "請輸入price",
-        //         "release.required" => "請輸入release",
-        //     ];
-        //     $request->validate($rules, $message);
-        // } catch (ValidationException $exception) {
-        //     $errorMessage = $exception->validator->errors()->first();
-        //     return response()->json([
-        //         'message' => $errorMessage
-        //     ], 400);
-        //     // $this->showValidationException($exception);
-        // }
-
-        // $newItem = new Items();
-        
-
-        // $newItem->name = $request->name;
-        // $newItem->brewerys_and_stores_id = $request->brewerys_and_stores_id;
-        // $newItem->alc = $request->alc;
-        // $newItem->price = $request->price;
-        // $newItem->release = $request->release;
-        // $newItem->save();
-        // return response()->json(['message' => 'newItem add success'], 201);
-
-        // $this->validate( $request,$request->rules(), $request->messages());
-
         try {
-            Items::create($request->all());
+            $this->validate($request, $rulesInput, $this->messageValidate);
+        } catch (ValidationException $exception) {
+            $errorMessage = $exception->validator->errors()->first();
+            return  $errorMessage;
+        }
+    }
 
-            $success = true;
-            $message = "Stored successful";
-        } catch (\Illuminate\Database\QueryException $ex) {
-            $success = false;
-            $data = null;
-            $message = $ex->getMessage();
+
+    public function store(Request $request)
+    {
+        $rules = [
+            "name" => "required| min:1 | string",
+            "brewerys_and_stores_id" => "required|int|exists:brewerys_and_stores,id",
+            "alc" => "required|numeric",
+            "price" => "required|int",
+            "release" => "required|boolean",
+        ];
+        $validResult = $this->customValidate($request, $rules);
+        if ($validResult != Null){
+            return response()->json(['message' => $validResult], 400);
         }
 
-        $response = [
-            'success' => $success,
-            'message' => $message
-        ];
-
-        return response()->json($response, 200);
-
+        $newItem = Items::create($request->all());
+        return response()->json(['message' => 'newItem add success'], 201);
 
     }
 
@@ -98,6 +76,8 @@ class itemsController extends Controller
     public function show($id)
     {
         //
+        return Items::find($id);
+
     }
 
     /**
@@ -107,16 +87,19 @@ class itemsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    // public function update(Request $request, $id)
-    public function update(ItemsRequest $request, $id)
+    public function update(Request $request, $id)
     {
-        //
-        // var_dump($request->all());
-
+        $rules = [
+            "name" => "required| min:1 | string",
+        ];
+        $validResult = $this->customValidate($request, $rules);
+        if ($validResult != Null){
+            return response()->json(['message' => $validResult], 400);
+        }
         $updateItem = Items::find($id);
         $updateItem->name = $request->name;
-        dd( $updateItem->name );
-
+        $updateItem->save();
+        return response()->json(['message' => 'Item:'. $id .' update success'], 201);
     }
 
     /**

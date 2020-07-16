@@ -16,14 +16,24 @@
 - [x] brewerys
 - [x] items
 
-|   | register  |login   |   |   |
-|---------|:---:|:---:|:---:|:---:|
-| users   |  o  | o |   |   |
-| brewerys|  o  |   |   |   |
-| items   |  o  | n/a  |   |   |
+
 
 
 ### CRUD 
+
+| api  | users  |brewerys   |   items|   |
+|---------|:---:|:---:|:---:|:---:|
+| register/create |  o  | o |  o  | 
+| login      |  o  |  o | n/a  |
+| read/show  |  o  |    |      | 
+| update/edit  |   |    |   o   | 
+| delete  |   |    |   o   | 
+| logout  |   |    |    n/a  | 
+| token /expire  |   |    |      | 
+
+
+
+
 - [ ] 用戶資料 
 - [ ] 釀酒廠/店家資訊
 - [ ] 不同酒廠酒類品項

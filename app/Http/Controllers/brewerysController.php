@@ -40,13 +40,14 @@ class brewerysController extends Controller
         //
         try {
             $rules = [
-                "name" => "required |string | min:1 |unique:brewerys_and_stores",
-                "password" => "required|string | min:1",
                 "email" => "required| email |unique:brewerys_and_stores",
+                "password" => "required|string | min:1   | regex:/^[A-Za-z0-9]+$/",
+                "name" => "required |string | min:1 |unique:brewerys_and_stores",
             ];
             $message = [
                 "name.required" => "請輸入name",
                 "password.required" => "請輸入password",
+                "password.regex" => "請輸入password 2",
                 "email.required" => "請輸入email",
             ];
             $validResult = $request->validate($rules, $message);

@@ -24,6 +24,11 @@ class Items extends Model
      * @var array
      */
     protected $hidden = [
-        '',
+        'created_at','updated_at'
     ];  
+
+    // public function name()
+    // {
+    //     return $this->hasOne('App\BrewerysStores');
+    // }
 }
