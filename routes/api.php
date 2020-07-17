@@ -32,6 +32,8 @@ Route::middleware(['apiLog'])->group(function () {
         Route::post('show', 'Auth\LoginController@show');
         Route::post('refreshToken', 'Auth\LoginController@refreshToken');
         Route::post('logout', 'Auth\LoginController@logout');
+        
+        Route::resource('history', 'historiesController');
     });
 
     
@@ -47,6 +49,7 @@ Route::middleware(['apiLog'])->group(function () {
 
 
     Route::resource('items', 'itemsController');
+
 
 });
 

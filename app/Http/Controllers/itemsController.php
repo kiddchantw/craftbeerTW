@@ -82,7 +82,21 @@ class itemsController extends Controller
                 
         //m1 ok: left join
         //show item from 哪個brewerys的名稱
-        $showItems = Items::where('items.id','=', $id)->leftJoin('brewerys_and_stores', 'items.brewerys_and_stores_id', '=', 'brewerys_and_stores.id')->select('items.*','brewerys_and_stores.name AS brewerys_and_stores_name')->get();
+        // $showItems = Items::where('items.id','=', $id)->leftJoin('brewerys_and_stores', 'items.brewerys_and_stores_id', '=', 'brewerys_and_stores.id')->select('items.*','brewerys_and_stores.name AS brewerys_and_stores_name')->get();
+        // return $showItems ;
+
+
+        //m2 
+        $showItems = Items::where('items.id','=', $id)
+        ->leftJoin('brewerys_and_stores', 'items.brewerys_and_stores_id', '=', 'brewerys_and_stores.id')
+        ->leftJoin('histories', 'items.id', '=', 'histories.item_id')
+        ->select( 
+            'items.*',
+            'brewerys_and_stores.name AS brewerys_and_stores_name',
+            \DB::raw('AVG(histories.rate) AS rate')
+        )
+        ->groupBy('items.id')
+        ->get();
         return $showItems ;
     }
 
