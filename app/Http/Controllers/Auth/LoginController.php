@@ -95,4 +95,27 @@ class LoginController extends Controller
     }
 
 
+    public function logout(Request $request){
+        $user = $request->user();
+        $user->remember_token = Null;
+        $user->token_expire_time = Null;
+        $user->save();
+        
+        return response()->json(['message' => "logout success!"], 200);
+    }
+
+
+    public function logoutBrewerys(Request $request)
+    {
+        // $brewerys = BrewerysStores::where('email', '=', $request->email)->first();
+        $stores = BrewerysStores::where('remember_token', '=', $request->remember_token)->first();
+
+        $stores->remember_token = Null;
+        $stores->token_expire_time = Null;
+        $stores->save();
+        
+        return response()->json(['message' => "brewerys logout success!"], 200);
+    }
+
+
 }

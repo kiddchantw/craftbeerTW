@@ -24,11 +24,11 @@
 | api  | users  |brewerys   |   items| 
 |---------|:---:|:---:|:---:|
 | login   |  o  |  o | n/a  |
-| logout  |   |    |    n/a  | 
+| logout  |  o |  o |    n/a  | 
 | token /expire  |  o |   o  |  n/a     | 
 | register/create |  o  | o |  o  | 
 | read/show  |  o  |  o    |   left join/ show brewerys' name  | 
-| showAll  |  n/a  |   o  |  n/a  | 
+| showAllItem  |  n/a  |   o  |  n/a  | 
 | update/edit  |   |  o  |  edit item name   | 
 | delete  |   |  50%  |   o   | 
 

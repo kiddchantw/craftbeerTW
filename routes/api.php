@@ -31,6 +31,7 @@ Route::middleware(['apiLog'])->group(function () {
     Route::middleware(['auth:api'])->group(function () {
         Route::post('show', 'Auth\LoginController@show');
         Route::post('refreshToken', 'Auth\LoginController@refreshToken');
+        Route::post('logout', 'Auth\LoginController@logout');
     });
 
     
@@ -41,6 +42,7 @@ Route::middleware(['apiLog'])->group(function () {
     
     Route::middleware(['breweryToken'])->group(function () {
         Route::post('brewerys/{id}/items', 'brewerysController@showAllItems');
+        Route::post('logoutBrewerys', 'Auth\LoginController@logoutBrewerys');
     });
 
 
