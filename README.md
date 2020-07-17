@@ -21,19 +21,16 @@
 
 ### CRUD 
 
-| api  | users  |brewerys   |   items|
+| api  | users  |brewerys   |   items| 
 |---------|:---:|:---:|:---:|
+| login   |  o  |  o | n/a  |
+| logout  |   |    |    n/a  | 
+| token /expire  |  o |   o  |  n/a     | 
 | register/create |  o  | o |  o  | 
-| login      |  o  |  o | n/a  |
-| read/showOne  |  o  |  o    |   left join/ show brewerys' name  | 
+| read/show  |  o  |  o    |   left join/ show brewerys' name  | 
 | showAll  |  n/a  |   o  |  n/a  | 
 | update/edit  |   |  o  |  edit item name   | 
 | delete  |   |  50%  |   o   | 
-| logout  |   |    |    n/a  | 
-| token /expire  |  o |   o  |  n/a     | 
-
-
-
 
 
 
@@ -42,10 +39,13 @@ https://dbdiagram.io/d/5f096d6d0425da461f048851
 
 
 
+
+
 # todoslist 2nd stage
 ## model
 - [ ] history 個人飲用紀錄
 - [ ] orders
+- [ ] details
 
 ##  api
 - [ ] 購物車 (僅發送訂購、不串金流)
@@ -53,5 +53,7 @@ https://dbdiagram.io/d/5f096d6d0425da461f048851
 - [ ] 上傳圖片
 - [ ] 單隻啤酒的總評分
 - [ ] 釀酒廠/店家資訊的總評分
+
+## CI/CD
 - [ ] deploy GCP 
 

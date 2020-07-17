@@ -33,6 +33,7 @@ Route::middleware(['apiLog'])->group(function () {
         Route::post('refreshToken', 'Auth\LoginController@refreshToken');
     });
 
+    
     //about stores
     Route::post('loginBrewerys', 'Auth\LoginController@loginBrewerys');
 
